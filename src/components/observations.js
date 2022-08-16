@@ -1,7 +1,6 @@
 import { useState, useEffect, useLayoutEffect } from 'react'
 import { validateDate } from '../helpers/validations'
 import { list } from '../data/observations'
-import _ from 'lodash'
 import { jsPDF } from "jspdf";
 
 const Observations = ({}) => {
