@@ -1,0 +1,66 @@
+.container {
+  padding: 5rem 6rem;
+  width: 100%;
+
+  @media only screen and (max-width: $large) {
+    padding: 2rem;
+  }
+
+  &-rubric {
+    padding: 4rem 3rem;
+    width: 100%;
+
+    @media only screen and (max-width: $large) {
+      padding: 2rem;
+    }
+
+    h1 { 
+      font-size: 4.2rem;
+    }
+
+    &-header {
+      display: flex;
+      width: 100%;
+
+      @media only screen and (max-width: $large) {
+        display: block;
+      }
+
+      &-column {
+        width: 50%;
+        padding: 1rem 2rem;
+
+        @media only screen and (max-width: $large) {
+          width: 100% !important;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          padding: 2rem 0;
+        }
+        
+      }
+  
+      p {
+        padding: 1rem 0;
+        font-size: 1.8rem;
+      }
+    }
+    
+  }
+
+  &-breadcrumb {
+    font-size: 16px;
+    text-decoration: underline;
+    transition: all .5s;
+    width: min-content;
+
+    &:hover {
+      color: #14bf98;
+      cursor: pointer;
+    }
+    
+  }  
+  
+}

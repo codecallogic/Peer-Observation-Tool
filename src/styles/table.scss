@@ -1,0 +1,351 @@
+.table {
+  width: 100%!important;
+
+  &-names {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem 2rem;
+
+    &-item {
+      width: 50%;
+      font-size: 2rem;
+      padding: 1rem 1rem 1rem 1rem;
+      text-transform: capitalize;
+      page-break-inside: avoid;
+
+      span {
+        font-weight: 500;
+      }
+    }
+    
+  }
+  
+  &-headers {
+    display: flex;
+    justify-content: flex-start;
+    background-color: $color-scheme-1;
+    align-items: flex-end;
+    padding: 2rem;
+    color: white;
+    border-top-right-radius: 1.2rem;
+    border-top-left-radius: 1.2rem;
+    width: 100%;
+    
+    &-item {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 500;
+      width: 33.3333%;
+
+      @media only screen and (max-width: $large) {
+        margin-right: .5rem;
+        width: 8rem;
+
+        &:last-child {
+          width: min-content;
+        }
+      }
+    }
+
+    @media only screen and (max-width: $large) {
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      width: 100%;
+      overflow-x: scroll;
+
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+        height: .5rem;
+        background-color: white;
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background-color: #757575;;
+      }
+    }
+  }
+
+  &-rows {
+    border-bottom: .1rem solid $color-scheme-1;
+    width: 100%;
+    page-break-inside: avoid;
+
+    &-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+      width: 100%;
+      padding: 1rem 0;
+      background-color: $color-light-shade-scheme-1;
+
+      &-type {
+        font-weight: 700;
+        margin-right: 1rem;
+      }
+    }
+
+    &-item {
+      text-align: center;
+      font-size: 1.4rem;
+      width: 33.3333%;
+      page-break-inside: avoid;
+
+      &-container {
+        display: flex;
+        align-items: center;
+        padding: .5rem 0;
+        height: 100%;
+
+        @media only screen and (max-width: $large) {
+          justify-content: flex-start;
+          flex-wrap: nowrap;
+          width: 100%;
+          overflow-x: scroll;
+
+          &::-webkit-scrollbar {
+            width: 0.2rem;
+            height: .2rem;
+            background-color: white;
+          }
+        
+          &::-webkit-scrollbar-thumb {
+            background-color: #757575;;
+          }
+        }
+      }
+
+      @media only screen and (max-width: $large) {
+        width: 300px !important;
+
+        &:nth-child(2) {
+          min-width: 10rem !important;
+        }
+
+        &:last-child {
+          width: min-content;
+        }
+      }
+
+      &-frequency {
+        display: flex;
+        justify-content: center;
+        width: 25%;
+        height: min-content;
+        
+        @media only screen and (max-width: $large) {
+          width: 32rem;
+        }
+
+        div {
+          display: flex;
+          justify-content: center;
+          width: 50%;
+          margin: 0 1rem;
+
+          @media only screen and (max-width: $large) {
+            width: 8rem !important;
+          }
+
+        }
+        
+      }
+    }
+  }
+  
+}
+
+.stacked {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  width: 66.6666%;
+  
+
+  &-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    &-observation {
+      padding: .5rem 0;
+      width: 50%;
+    }
+
+    &-select {
+      padding: .5rem 0;
+      width: 50%;
+    }
+    
+  }
+  
+}
+
+.columns {
+  margin: 0 auto;
+  
+  &-title {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100% !important;
+    padding: 1rem 0;
+
+    @media only screen and (max-width: $large) {
+      flex-wrap: nowrap !important;
+    }
+    
+  }
+
+  &-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // text-align: center;
+    // text-align: right;
+    // writing-mode: vertical-rl;
+    width: 11.1111%;
+    max-height: 20rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+
+    @media only screen and (max-width: $large) {
+      width: 8rem;
+    }
+  }
+}
+
+.border {
+  &-top {
+    border-right: .1rem solid white;
+  }
+}
+
+.checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: 100%;
+  padding: 1rem 1rem;
+
+  @media only screen and (max-width: $large) {
+    width: 8rem!important;
+  }
+
+  label {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0.1rem solid $color-light-shade-scheme-1;
+    background-color: white;
+    box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  span {
+    font-size: 1.4rem;
+    margin-left: 1rem;
+    font-weight: 400;
+    color: $color-scheme-1;
+  }
+
+  input {
+    display: none;
+
+    &:checked + label {
+      background-color: $color-scheme-2;
+    }
+  }
+}
+
+.textarea {
+  text-transform: capitalize;
+  padding: 0.5rem 0;
+  margin: 3rem 0;
+  position: relative;
+  page-break-inside: avoid;
+
+  textarea {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    resize: none;
+    padding: 2rem 1rem;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1.4rem;
+    font-family: inherit;
+    border: none;
+    border-radius: 1.2rem;
+    background-color: $color-light-shade-scheme-4;
+    box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0.2rem;
+      background-color: $color-scheme-1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-scheme-1;
+    }
+  }
+
+  label {
+    position: absolute;
+    display: flex;
+    top: 5%;
+    transition: all 0.3s ease-in-out;
+    padding: 0 0.5rem;
+    color: $color-scheme-1;
+    font-size: 1.2rem;
+  }
+}
+
+.no-border {
+  border: none;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.width-50 {
+  width: 50%!important;
+}
+
+.width-25 {
+  width: 25%!important;
+}
+
+.width-75 {
+  width: 75%!important;
+  padding-left: 2rem;
+}
+
+.width-33 {
+  width: 33.33%!important;
+}
+
+#pdf {
+  // max-width: 30rem;
+  
+  img {
+    page-break-inside: avoid;
+  }
+}
+
+.p3 {
+  padding: 3rem;
+}
