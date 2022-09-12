@@ -1,6 +1,6 @@
 {
   "name": "observations",
-  "homepage": "/poform",
+  "homepage": "https://ecostem.calstatela.edu/poform",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

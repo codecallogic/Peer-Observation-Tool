@@ -1,7 +1,7 @@
 module.exports = {
   configure: {
     output: {
-      publicPath: '/poform/'
+      publicPath: '/poform'
     }
   }
 }
