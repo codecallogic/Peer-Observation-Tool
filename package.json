@@ -1,6 +1,6 @@
 {
   "name": "observations",
-  "homepage": "",
+  "homepage": "/poform",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
