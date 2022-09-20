@@ -1,10 +1,9 @@
 {
   "name": "observations",
-  "homepage": "https://ecostem.calstatela.edu/poform",
+  "homepage": "/poform",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.4.5",
     "jspdf": "^2.5.1",
     "node-sass": "^7.0.1",
     "react": "^18.2.0",
@@ -14,10 +13,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "watch:css": "node-sass src/styles/main.scss src/styles/app.css -w",
     "deploy": "vercel --prod"
   },
