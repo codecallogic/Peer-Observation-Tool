@@ -4,8 +4,11 @@
   "private": true,
   "homepage": "/poform",
   "dependencies": {
+    "docxtemplater": "^3.43.0",
+    "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "node-sass": "^7.0.1",
+    "pizzip": "^3.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.0",

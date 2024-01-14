@@ -517,6 +517,94 @@ const list = [
         ]
       }
     ]
+  },
+  {
+    type: 'Vibrancy:',
+    header: 'Activity and level of engagement',
+    indicator: 'V4: Stimulates a high level of student engagement',
+    showHeader: false,
+    observations: [
+      {
+        observation: `V4.1: Provided varied opportunities for students to apply newly learned content `,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        observation: `V4.2: Adopted strategies and activities that captivate disengaged students`,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        observation: `V4.3: Students readily participated in in-class activities`,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        observation: `V4.4: Gave students recurring opportunities to engage with other students in small groups or as a whole class`,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    type: 'Vibrancy:',
+    header: 'Activity and level of engagement',
+    indicator: 'V5: Promotes the growth of motivated and deep learners',
+    showHeader: false,
+    observations: [
+      {
+        observation: `V5.1: Used class activities and assignments that held relevance to students’ lived experiences and their communities `,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        observation: `V5.2: Promoted critical thinking through comprehensive exploration of assumptions and sociocultural context in models and paradigms before accepting or formulating an opinion or conclusion `,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        observation: `V5.3: Asked students to generate their own explanations and justify their thinking `,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        observation: `V5.4: Promoted students’ reflection on their own learning or performance`,
+        selected: false,
+        frequency: [
+          false,
+          false,
+          false
+        ]
+      }
+    ]
   }
 ]
 

@@ -2,6 +2,14 @@ import { useState, useEffect, useLayoutEffect } from 'react'
 import { validateDate } from '../helpers/validations'
 import { list } from '../data/observations'
 import { jsPDF } from "jspdf";
+import Docxtemplater from 'docxtemplater';
+import PizZip from 'pizzip';
+import PizZipUtils from 'pizzip/utils/index.js';
+import { saveAs } from 'file-saver';
+
+function loadFile(url, callback) {
+  PizZipUtils.getBinaryContent(url, callback);
+}
 
 const Observations = ({}) => {
   
@@ -21,7 +29,7 @@ const Observations = ({}) => {
       if(id == rowIdx) item.observations[obsIdx].selected = item.observations[obsIdx].selected ? false : true
       return item
     })
-
+    
     setItems(newItems)
     
   }
@@ -45,7 +53,7 @@ const Observations = ({}) => {
       return indicators.push(false)
       
     })
-
+  
     setIndicators(indicators)
     
   }
@@ -152,188 +160,91 @@ const Observations = ({}) => {
     
   }, [preview])
 
-  // const convertToPDF = async () => {
-  //   const html = await import('html2pdf.js')
-   
-  //   let element = document.getElementById('pdf')
-  //   let opt = {
-  //     margin: .3,
-  //     filename: `rubric`,
-  //     image: { type: 'png', quality: 0.99 },
-  //     html2canvas: { scale: 2 },
-  //     jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
-  //   }
-  //   html.default().set(opt).from(element).save()
-  // }
-
   const convertToPDF = () => {
+    console.log(items)
+    loadFile(
+      './template.docx',
+      function (error, content) {
+        if (error) {
+          throw error;
+        }
+        var zip = new PizZip(content);
+        var doc = new Docxtemplater(zip, {
+          paragraphLoop: true,
+          linebreaks: true,
+          nullGetter() { return ''; }
+        });
 
-    const doc = new jsPDF({
-      format: [600, 820],
-      orientation: "p",
-    });
+        const data = new Object()
+        let count = 1
 
-    doc.addImage('/ecostem.png', 'PNG', 20, 20, 35, 50)
-
-    let title = doc.setFontSize(42).splitTextToSize('Eco-STEM Peer-Observation Form', 300)
-    doc.text(200, 50, title)
-    
-    let instructorLabel = doc.setFontSize(18).splitTextToSize('Instructor', 130)
-    doc.text(20, 100, instructorLabel)
-    
-    let instructorField = new doc.AcroFormTextField()
-    instructorField.Rect = [20, 20, 550, 10];
-    instructorField.x = 20
-    instructorField.y = 105
-    instructorField.fontSize = 14
-    instructorField.maxFontSize = 14
-    doc.addField(instructorField)
-
-    let courseLabel = doc.setFontSize(18).splitTextToSize('Course', 130)
-    doc.text(20, 130, courseLabel)
-    let courseField = new doc.AcroFormTextField()
-    courseField.Rect = [20, 20, 550, 10];
-    courseField.x = 20
-    courseField.y = 135
-    courseField.fontSize = 14
-    instructorField.maxFontSize = 14
-    doc.addField(courseField)
-
-    let observerLabel = doc.setFontSize(18).splitTextToSize('Observer', 130)
-    doc.text(20, 160, observerLabel)
-    let observerField = new doc.AcroFormTextField()
-    observerField.Rect = [20, 20, 550, 10];
-    observerField.x = 20
-    observerField.y = 165
-    observerField.fontSize = 14
-    instructorField.maxFontSize = 14
-    doc.addField(observerField)
-
-    let dateFieldLabel = doc.setFontSize(18).splitTextToSize('Date', 130)
-    doc.text(20, 190, dateFieldLabel)
-    let dateField = new doc.AcroFormTextField()
-    dateField.Rect = [20, 20, 550, 10];
-    dateField.defaultValue = "12/12/2022"
-    dateField.x = 20
-    dateField.y = 195
-    dateField.fontSize = 14
-    instructorField.maxFontSize = 14
-    doc.addField(dateField)
-    
-    let indicatorHeader   = 'Indicator'
-    let observationHeader = 'Observations'
-    let clearyEvident = 'Clearly Evident'
-    let somewhatEvident = 'Somewhat Evident'
-    let notEvident = 'Not Evident'
-    
-    let indicator = doc.setFontSize(18).splitTextToSize(indicatorHeader, 140)
-    doc.text(20, 240, indicator)
-
-    let observation = doc.setFontSize(18).splitTextToSize(observationHeader, 140)
-    doc.text(180, 240, observation)
-
-    let clearly = doc.setFontSize(18).splitTextToSize(clearyEvident, 80)
-    doc.text(320, 240, clearly)
-
-    let somewhat = doc.setFontSize(18).splitTextToSize(somewhatEvident, 80)
-    doc.text(400, 240, somewhat)
-
-    let not = doc.setFontSize(18).splitTextToSize(notEvident, 80)
-    doc.text(500, 240, not)
-
-    doc.line(20, 220, 575, 220, 'FD')
-    doc.line(20, 260, 575, 260, 'FD')
-
-    let position = 300;
-    let prevsPosition = 200;
-    let pageHeight = 740;
-
-    items.map((item, rowIdx) => {
-      if(indicators[rowIdx]){
-        
-        let newText = doc.setFontSize(18).splitTextToSize(item.indicator, 130)
-        doc.text(20, position, newText)
-
-        item.observations.map((itemObs, obsIdx) => {
+        let newItems = items.map((item, idx) => {
           
-          if(itemObs.selected){
+          item.showHeader = false
 
-            if( position - prevsPosition !== 100 ) position += 100
-            if( position - prevsPosition == 100 ) prevsPosition += 100
-            console.log('NEW', position)
-
-            if(position > pageHeight){
-              doc.addPage();
-              position = 50
+          item.observations.forEach((obs, obsIdx) => {
+            
+            if(obs.selected){
+              data[count] = `${obs.observation} \n`
+              count++
             }
             
-            let newText = doc.setFontSize(18).splitTextToSize(itemObs.observation, 130)
-            doc.text(170, position, newText)
-
-            let checkBoxClearlyEvident = new doc.AcroFormCheckBox();
-            checkBoxClearlyEvident.Rect = [15, 15, 15, 15];
-            checkBoxClearlyEvident.x = 330;
-            checkBoxClearlyEvident.y = position - 10;
-            checkBoxClearlyEvident.appearanceState = 'Off'
-            doc.addField(checkBoxClearlyEvident);
-
-            let checkBoxSomewhatEvident = new doc.AcroFormCheckBox();
-            checkBoxSomewhatEvident.Rect = [15, 15, 15, 15];
-            checkBoxSomewhatEvident.x = 420;
-            checkBoxSomewhatEvident.y = position - 10;
-            checkBoxSomewhatEvident.appearanceState = 'Off'
-            doc.addField(checkBoxSomewhatEvident);
-
-            let checkBoxNotEvident = new doc.AcroFormCheckBox();
-            checkBoxNotEvident.Rect = [15, 15, 15, 15];
-            checkBoxNotEvident.x = 510;
-            checkBoxNotEvident.y = position - 10;
-            checkBoxNotEvident.appearanceState = 'Off'
-            doc.addField(checkBoxNotEvident);
-
-            
-          }
-
-          if((item.observations.length - 1) == obsIdx){
-            prevsPosition = position
-            position += 100
-          }
+          })
           
         })
 
-        if(position > pageHeight){
-          doc.addPage();
-          position = 50
-          prevsPosition = -50
-          return
-        }
+        console.log(data)
         
+        data.instructor =  instructor
+        data.course = course
+        data.observer = observer
+        data.date = time
+        data.comments = comments
+
+        for(let key in data){ if(!data[key]) delete data[key]}
+
+        doc.setData(data);
+        
+        try {
+          // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+          doc.render();
+        } catch (error) {
+          // The error thrown here contains additional information when logged with JSON.stringify (it contains a properties object containing all suberrors).
+          function replaceErrors(key, value) {
+            if (value instanceof Error) {
+              return Object.getOwnPropertyNames(value).reduce(function (
+                error,
+                key
+              ) {
+                error[key] = value[key];
+                return error;
+              },
+              {});
+            }
+            return value;
+          }
+          console.log(JSON.stringify({ error: error }, replaceErrors));
+
+          if (error.properties && error.properties.errors instanceof Array) {
+            const errorMessages = error.properties.errors
+              .map(function (error) {
+                return error.properties.explanation;
+              })
+              .join('\n');
+            console.log('errorMessages', errorMessages);
+            // errorMessages is a humanly readable message looking like this :
+            // 'The tag beginning with "foobar" is unopened'
+          }
+          throw error;
+        }
+        var out = doc.getZip().generate({
+          type: 'blob',
+          mimeType:
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        }); //Output the document using Data-URI
+        saveAs(out, 'output.docx');
       }
-    })
-    
-    if( position > pageHeight){
-      doc.addPage();
-      position = 50
-      return
-    }
-
-
-    let commentsLabel = doc.setFontSize(18).splitTextToSize('Comments', 130)
-    doc.text(20, position - 5 , commentsLabel)
-    let commentsFieldOne = new doc.AcroFormTextField()
-    commentsFieldOne.Rect = [20, 300, 550, 130];
-    commentsFieldOne.x = 20
-    commentsFieldOne.y = position
-    commentsFieldOne.multiline = true
-    commentsFieldOne.fontSize = 22
-    // commentsFieldOne.maxFontSize = 22
-
-   
-    doc.addField(commentsFieldOne)
-
-    let statement = doc.setFontSize(24).splitTextToSize('This material is based upon work supported by the National Science Foundation under Grant IUSE#2013630', 400)
-    doc.text(20, position + 150 , statement)
-    doc.save('Peer Observation Form.pdf');
+    );
     
   }
 
@@ -617,6 +528,7 @@ const Observations = ({}) => {
             </div>
           </div>
         )}
+
         {preview && 
         <div className="textarea">
           <label
@@ -665,73 +577,3 @@ const Observations = ({}) => {
 }
 
 export default Observations
-
-// let commentsFieldTwo = new doc.AcroFormTextField()
-    // commentsFieldTwo.fontSize = 12
-    // commentsFieldTwo.Rect = [20, 20, 550, 10];
-    // commentsFieldTwo.x = 20
-    // commentsFieldTwo.y = position + 10
-    // doc.addField(commentsFieldTwo)
-
-    // let commentsFieldThree = new doc.AcroFormTextField()
-    // commentsFieldThree.fontSize = 12
-    // commentsFieldThree.Rect = [20, 20, 550, 10];
-    // commentsFieldThree.x = 20
-    // commentsFieldThree.y = position + 20
-    // doc.addField(commentsFieldThree)
-
-    // let commentsFieldFour = new doc.AcroFormTextField()
-    // commentsFieldFour.fontSize = 12
-    // commentsFieldFour.Rect = [20, 20, 550, 10];
-    // commentsFieldFour.x = 20
-    // commentsFieldFour.y = position + 30
-    // doc.addField(commentsFieldFour)
-
-    // let commentsFieldFive = new doc.AcroFormTextField()
-    // commentsFieldFive.fontSize = 12
-    // commentsFieldFive.Rect = [20, 20, 550, 10];
-    // commentsFieldFive.x = 20
-    // commentsFieldFive.y = position + 40
-    // doc.addField(commentsFieldFive)
-
-    // let commentsFieldSix = new doc.AcroFormTextField()
-    // commentsFieldSix.fontSize = 12
-    // commentsFieldSix.Rect = [20, 20, 550, 10];
-    // commentsFieldSix.x = 20
-    // commentsFieldSix.y = position + 50
-    // doc.addField(commentsFieldSix)
-
-    // let commentsFieldSeven = new doc.AcroFormTextField()
-    // commentsFieldSeven.fontSize = 12
-    // commentsFieldSeven.Rect = [20, 20, 550, 10];
-    // commentsFieldSeven.x = 20
-    // commentsFieldSeven.y = position + 60
-    // doc.addField(commentsFieldSeven)
-
-    // let commentsFieldEight = new doc.AcroFormTextField()
-    // commentsFieldEight.fontSize = 12
-    // commentsFieldEight.Rect = [20, 20, 550, 10];
-    // commentsFieldEight.x = 20
-    // commentsFieldEight.y = position + 70
-    // doc.addField(commentsFieldEight)
-
-    // let commentsFieldNine = new doc.AcroFormTextField()
-    // commentsFieldNine.fontSize = 12
-    // commentsFieldNine.Rect = [20, 20, 550, 10];
-    // commentsFieldNine.x = 20
-    // commentsFieldNine.y = position + 80
-    // doc.addField(commentsFieldNine)
-    
-    // let commentsFieldTen = new doc.AcroFormTextField()
-    // commentsFieldTen.fontSize = 12
-    // commentsFieldTen.Rect = [20, 20, 550, 10];
-    // commentsFieldTen.x = 20
-    // commentsFieldTen.y = position + 90
-    // doc.addField(commentsFieldTen)
-
-    // let commentsFieldEleven = new doc.AcroFormTextField()
-    // commentsFieldEleven.fontSize = 12
-    // commentsFieldEleven.Rect = [20, 20, 550, 10];
-    // commentsFieldEleven.x = 20
-    // commentsFieldEleven.y = position + 100
-    // doc.addField(commentsFieldEleven)
