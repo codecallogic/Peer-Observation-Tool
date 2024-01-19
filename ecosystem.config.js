@@ -8,7 +8,7 @@ module.exports = {
     production : {
       key  : 'Catsus.pem',
       user : 'ubuntu',
-      host : '13.56.20.27',
+      host : '54.215.249.118',
       ref  : 'origin/master',
       repo : 'git@github.com:codecallogic/Peer-Observation-Tool.git',
       path : '/home/ubuntu/client',
