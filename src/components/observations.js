@@ -1,7 +1,6 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { validateDate } from '../helpers/validations'
 import { list } from '../data/observations'
-import { jsPDF } from "jspdf";
 import Docxtemplater from 'docxtemplater';
 import PizZip from 'pizzip';
 import PizZipUtils from 'pizzip/utils/index.js';
@@ -176,24 +175,46 @@ const Observations = ({}) => {
         });
 
         const data = new Object()
-        let count = 1
+        // let count = 1
 
-        let newItems = items.map((item, idx) => {
+        // let newItems = items.map((item, idx) => {
           
-          item.showHeader = false
+        //   item.showHeader = false
+
+        //   item.observations.forEach((obs, obsIdx) => {
+            
+        //     if(obs.selected){
+        //       data[count] = `${obs.observation} \n`
+        //       count++
+        //     }
+            
+        //   })
+          
+        // })
+
+        let newItems = []
+        
+        items.map((item, idx) => {
 
           item.observations.forEach((obs, obsIdx) => {
             
             if(obs.selected){
-              data[count] = `${obs.observation} \n`
-              count++
+              
+              let object = new Object()
+
+              object.indicator = `${obs.observation}`
+
+              newItems.push(object)
+              
             }
             
           })
           
         })
 
-        console.log(data)
+        // console.log(newItems)
+
+        console.log(newItems)
         
         data.instructor =  instructor
         data.course = course
@@ -207,7 +228,9 @@ const Observations = ({}) => {
         
         try {
           // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
-          doc.render();
+          doc.render({
+            indicators: newItems
+          });
         } catch (error) {
           // The error thrown here contains additional information when logged with JSON.stringify (it contains a properties object containing all suberrors).
           function replaceErrors(key, value) {
@@ -569,7 +592,7 @@ const Observations = ({}) => {
           convertToPDF()
         )
       }>
-        Generate PDF
+        Generate Document
       </button>
       }
     </div>
