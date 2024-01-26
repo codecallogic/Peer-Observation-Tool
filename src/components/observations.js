@@ -175,22 +175,6 @@ const Observations = ({}) => {
         });
 
         const data = new Object()
-        // let count = 1
-
-        // let newItems = items.map((item, idx) => {
-          
-        //   item.showHeader = false
-
-        //   item.observations.forEach((obs, obsIdx) => {
-            
-        //     if(obs.selected){
-        //       data[count] = `${obs.observation} \n`
-        //       count++
-        //     }
-            
-        //   })
-          
-        // })
 
         let newItems = []
         
@@ -211,10 +195,6 @@ const Observations = ({}) => {
           })
           
         })
-
-        // console.log(newItems)
-
-        console.log(newItems)
         
         data.instructor =  instructor
         data.course = course
@@ -229,7 +209,11 @@ const Observations = ({}) => {
         try {
           // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
           doc.render({
-            indicators: newItems
+            indicators: newItems,
+            instructor: instructor,
+            course: course,
+            observer: observer,
+            date: time
           });
         } catch (error) {
           // The error thrown here contains additional information when logged with JSON.stringify (it contains a properties object containing all suberrors).
