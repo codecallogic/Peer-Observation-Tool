@@ -2,7 +2,6 @@
   "name": "observations",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/poform",
   "dependencies": {
     "docxtemplater": "^3.43.0",
     "file-saver": "^2.0.5",
