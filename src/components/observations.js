@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { validateDate } from '../helpers/validations'
+import { validateNumber } from '../helpers/validations'
 import { list } from '../data/observations'
 import Docxtemplater from 'docxtemplater';
 import PizZip from 'pizzip';
@@ -336,7 +336,7 @@ const Observations = ({}) => {
                 id="time"
                 value={time}
                 onChange={(e) =>
-                  setTime(validateDate(e, 'time'))
+                  setTime(validateNumber('time'))
                 }
               />
               <label
@@ -536,7 +536,7 @@ const Observations = ({}) => {
           </div>
         )}
 
-        {preview && 
+        {/* {preview && 
         <div className="textarea">
           <label
             className={
@@ -557,7 +557,7 @@ const Observations = ({}) => {
             }
           />
         </div>
-        }
+        } */}
       </div>
       
       {!preview && 

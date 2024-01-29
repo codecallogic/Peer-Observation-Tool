@@ -63,6 +63,17 @@ const validateDate = (e, key, caseType, reduxMethod) => {
   }
 }
 
+const validateNumber = (type) => {
+
+  const input = document.getElementById(type)
+  
+  const regex = /[^0-9|\n\r]/g
+
+  input.value = input.value.split(regex).join('')
+
+}
+
 export {
-  validateDate
+  validateDate,
+  validateNumber
 }
