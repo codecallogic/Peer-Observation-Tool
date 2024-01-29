@@ -336,7 +336,7 @@ const Observations = ({}) => {
                 id="time"
                 value={time}
                 onChange={(e) =>
-                  setTime(validateNumber('time'))
+                  setTime(e.target.value)
                 }
               />
               <label
