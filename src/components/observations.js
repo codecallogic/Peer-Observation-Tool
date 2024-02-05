@@ -261,7 +261,7 @@ const Observations = ({}) => {
       <div className="container-rubric-header">
         <div className="container-rubric-header-column">
           <p>The tool includes key indicators and observable items in three major areas critical to a healthy ecosystem in the classroom. Before the classroom observation, the peer observer should meet with the faculty member being observed to identify the observable behavior items (no more than 26) based on the goals for the observation and your planned instructional activities for the session.</p>
-          <p>During the observation, the peer observer can use the following rubric to mark the selected observable behaviors:</p>
+          <p>During the observation, the peer observer can use the following rubric to mark the selected observable behaviors.</p>
         </div>
         <div className="container-rubric-header-column">
           <form>
